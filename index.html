@@ -3,118 +3,167 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JADI SALUD | El Futuro de la Gestión Médica</title>
+    <title>JADI SALUD | Business Suite</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Estilos específicos para la Landing Page */
-        .hero-banner {
-            text-align: center;
-            padding: 60px 20px;
-            background: linear-gradient(rgba(10,10,12,0.8), rgba(10,10,12,0.8)), url('https://images.unsplash.com/photo-1576091160550-2173dbc999ef?auto=format&fit=crop&q=80&w=2070');
+        :root { --accent: #00f2ff; --bg: #0a0a0c; --card: #141418; }
+        
+        body { background-color: var(--bg); margin: 0; }
+
+        /* Banner Compacto y Agresivo */
+        .hero {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2053');
             background-size: cover;
-            border-bottom: 2px solid var(--accent);
-            margin-bottom: 40px;
+            background-position: center;
+            border-bottom: 3px solid var(--accent);
+            text-align: center;
         }
 
-        .hero-banner h1 { font-size: 2.5rem; margin-bottom: 20px; }
-
-        /* Barra Giratoria de Sponsors (Marquee) */
-        .sponsor-track {
-            background: #141418;
-            padding: 20px 0;
-            overflow: hidden;
-            white-space: nowrap;
-            border-top: 1px solid #222;
-            border-bottom: 1px solid #222;
-        }
-
-        .marquee-content {
-            display: inline-block;
-            animation: marquee 20s linear infinite;
-        }
-
-        .marquee-content span {
-            color: var(--text-gray);
+        .hero h1 { font-size: clamp(2rem, 8vw, 4rem); margin: 0; text-shadow: 0 0 20px var(--accent); }
+        
+        /* Botón Mejorado: Corto y Potente */
+        .btn-join {
+            margin-top: 30px;
+            padding: 15px 50px;
+            background: var(--accent);
+            color: #000;
             font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            margin: 0 40px;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+            transition: all 0.3s ease;
             text-transform: uppercase;
         }
 
-        @keyframes marquee {
+        .btn-join:hover { transform: scale(1.1); box-shadow: 0 0 50px var(--accent); background: #fff; }
+
+        /* Barra de Sponsors */
+        .marquee {
+            background: var(--card);
+            padding: 15px 0;
+            overflow: hidden;
+            border-bottom: 1px solid #333;
+        }
+
+        .marquee-inner {
+            display: flex;
+            width: 200%;
+            animation: scroll 25s linear infinite;
+        }
+
+        .marquee-inner span {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        @keyframes scroll {
             0% { transform: translateX(0); }
             100% { transform: translateX(-50%); }
         }
 
-        .cta-section {
-            text-align: center;
-            padding: 40px 20px;
+        /* Publicidad en Rejilla (Para no dejar espacios) */
+        .ads-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
         }
 
-        .btn-main {
-            display: inline-block;
-            background: var(--accent);
-            color: #000;
-            padding: 20px 40px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            box-shadow: 0 0 20px var(--accent);
+        .ad-card {
+            background: var(--card);
+            padding: 25px;
+            border-radius: 10px;
+            border: 1px solid #222;
             transition: 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
-        .btn-main:hover {
-            transform: scale(1.05);
-            background: #fff;
-        }
+        .ad-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+
+        .ad-card h3 { color: var(--accent); margin-top: 0; font-family: 'Orbitron'; font-size: 1rem; }
+        
+        .ad-card p { font-size: 0.85rem; color: #aaa; line-height: 1.4; }
+
+        .icon-box { font-size: 2rem; margin-bottom: 15px; display: block; }
+
+        footer { text-align: center; padding: 40px; color: #444; font-size: 0.8rem; }
     </style>
 </head>
 <body>
 
-    <section class="hero-banner">
+    <section class="hero">
         <h1 class="accent">JADI SALUD</h1>
-        <p style="font-size: 1.2rem; color: var(--text-gray);">Digitaliza tu consultorio con tecnología de última generación.</p>
-        <br><br>
-        <a href="registro-centro.html" class="btn-main">REGISTRA TU CASA DE SALUD AQUÍ</a>
+        <p style="color: #fff; letter-spacing: 3px;">TECH MÉDICA DE ÉLITE</p>
+        <a href="registro-centro.html" class="btn-join">¡ÚNETE AHORA!</a>
     </section>
 
-    <div class="sponsor-track">
-        <div class="marquee-content">
-            <span>AZUCENA MEDICAL CENTER</span>
-            <span>JADI REPAIZ</span>
-            <span>IDV SKY</span>
-            <span>OPTOMETRÍA INTEGRAL</span>
-            <span>FISIOTERAPIA QUITO</span>
-            <span>AZUCENA MEDICAL CENTER</span>
-            <span>JADI REPAIZ</span>
-            <span>IDV SKY</span>
-            <span>OPTOMETRÍA INTEGRAL</span>
-            <span>FISIOTERAPIA QUITO</span>
+    <div class="marquee">
+        <div class="marquee-inner">
+            <span>
+                <b>● AZUCENA MEDICAL</b> <b>● JADI REPAIZ</b> <b>● IDV SKY</b> <b>● FISIO-QUITO</b> <b>● OPTOMETRÍA JADI</b>
+            </span>
+            <span>
+                <b>● AZUCENA MEDICAL</b> <b>● JADI REPAIZ</b> <b>● IDV SKY</b> <b>● FISIO-QUITO</b> <b>● OPTOMETRÍA JADI</b>
+            </span>
         </div>
     </div>
 
-    <div class="main-container" style="max-width: 1000px; margin-top: 40px;">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;">
-            <div class="form-card">
-                <h3 class="accent">GESTIÓN QR</h3>
-                <p>Entrega un acceso rápido a tus pacientes mediante códigos personalizados.</p>
-            </div>
-            <div class="form-card">
-                <h3 class="accent">BASE DE DATOS</h3>
-                <p>Acceso seguro y en tiempo real a los expedientes médicos desde cualquier lugar.</p>
-            </div>
-            <div class="form-card">
-                <h3 class="accent">MARCA BLANCA</h3>
-                <p>Tu propia identidad visual integrada en nuestra plataforma tecnológica.</p>
-            </div>
+    <main class="ads-grid">
+        <div class="ad-card">
+            <span class="icon-box">📊</span>
+            <h3>DASHBOARD REAL-TIME</h3>
+            <p>Controla tus ingresos y pacientes en un panel neón de última generación. Datos en vivo.</p>
         </div>
-    </div>
+
+        <div class="ad-card">
+            <span class="icon-box">🔐</span>
+            <h3>FIREBASE SECURITY</h3>
+            <p>Tus expedientes protegidos con cifrado militar. Privacidad total para tus pacientes.</p>
+        </div>
+
+        <div class="ad-card">
+            <span class="icon-box">📱</span>
+            <h3>ACCESO MÓVIL</h3>
+            <p>Gestiona tu clínica desde el celular. Compatible con Android e iOS sin instalar nada.</p>
+        </div>
+
+        <div class="ad-card">
+            <span class="icon-box">⚡</span>
+            <h3>ID DINÁMICO</h3>
+            <p>Crea links personalizados para cada sucursal en segundos. Tu marca, tu control.</p>
+        </div>
+
+        <div class="ad-card">
+            <span class="icon-box">🧬</span>
+            <h3>HISTORIAL CLÍNICO</h3>
+            <p>Fichas médicas digitales completas con tipos de sangre, alergias y antecedentes.</p>
+        </div>
+
+        <div class="ad-card">
+            <span class="icon-box">🛠️</span>
+            <h3>SOPORTE JADI</h3>
+            <p>Asistencia técnica 24/7. Somos tus aliados en el crecimiento de tu negocio de salud.</p>
+        </div>
+    </main>
 
     <footer>
-        <p>© 2026 Powered by <span class="accent">JADI SOLUTIONS</span> | Quito, Ecuador</p>
+        <p>© 2026 JADI SOLUTIONS | EL FUTURO ES HOY</p>
     </footer>
 
 </body>
