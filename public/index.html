@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cargando Sistema...</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="main-container">
+        <header>
+            <h1 id="nombreNegocio">JADI <span class="accent">SALUD</span></h1>
+            <p class="subtitle" id="tagline">SISTEMA MÉDICO INTEGRAL</p>
+        </header>
+
+        <section class="form-card">
+            <div class="card-header">
+                <h2>REGISTRO DE PACIENTE</h2>
+                <div class="line"></div>
+            </div>
+            
+            <form id="registroForm">
+                <div class="input-group">
+                    <label>NÚMERO DE CÉDULA</label>
+                    <input type="text" id="cedula" placeholder="Ej: 1725..." required>
+                </div>
+                
+                <div class="row">
+                    <div class="input-group">
+                        <label>NOMBRES</label>
+                        <input type="text" id="nombre" placeholder="Nombre completo" required>
+                    </div>
+                    <div class="input-group">
+                        <label>APELLIDOS</label>
+                        <input type="text" id="apellido" placeholder="Apellidos completos" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>TELÉFONO / WHATSAPP</label>
+                    <input type="tel" id="telefono" placeholder="Ej: 098..." required>
+                </div>
+                
+                <div class="input-group">
+                    <label>TIPO DE SANGRE</label>
+                    <select id="tipoSangre">
+                        <option value="" disabled selected>Seleccione...</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>ALERGIAS O NOTAS</label>
+                    <textarea id="alergias" rows="3" placeholder="Ninguna / Penicilina / etc."></textarea>
+                </div>
+                
+                <button type="submit" id="btnGuardar">REGISTRAR EN SISTEMA</button>
+            </form>
+        </section>
+        
+        <footer>
+            <p>© 2026 Powered by <span class="accent">JADI SOLUTIONS</span></p>
+        </footer>
+    </div>
+
+    <script type="module" src="core.js"></script>
+</body>
+</html>
