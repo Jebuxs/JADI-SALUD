@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cargando Sistema...</title>
+    <title>JADI SALUD - Sistema Médico</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <div class="main-container">
         <header>
             <h1 id="nombreNegocio">JADI <span class="accent">SALUD</span></h1>
-            <p class="subtitle" id="tagline">SISTEMA MÉDICO INTEGRAL</p>
+            <p class="subtitle" id="tagline">ECOSISTEMA MÉDICO DIGITAL</p>
         </header>
 
         <section class="form-card">
@@ -29,17 +32,17 @@
                 <div class="row">
                     <div class="input-group">
                         <label>NOMBRES</label>
-                        <input type="text" id="nombre" placeholder="Nombre completo" required>
+                        <input type="text" id="nombre" placeholder="Nombres" required>
                     </div>
                     <div class="input-group">
                         <label>APELLIDOS</label>
-                        <input type="text" id="apellido" placeholder="Apellidos completos" required>
+                        <input type="text" id="apellido" placeholder="Apellidos" required>
                     </div>
                 </div>
 
                 <div class="input-group">
                     <label>TELÉFONO / WHATSAPP</label>
-                    <input type="tel" id="telefono" placeholder="Ej: 098..." required>
+                    <input type="tel" id="telefono" placeholder="Ej: 0987654321" required>
                 </div>
                 
                 <div class="input-group">
@@ -58,11 +61,11 @@
                 </div>
 
                 <div class="input-group">
-                    <label>ALERGIAS O NOTAS</label>
-                    <textarea id="alergias" rows="3" placeholder="Ninguna / Penicilina / etc."></textarea>
+                    <label>ALERGIAS O OBSERVACIONES</label>
+                    <textarea id="alergias" rows="3" placeholder="Indique alergias o notas importantes..."></textarea>
                 </div>
                 
-                <button type="submit" id="btnGuardar">REGISTRAR EN SISTEMA</button>
+                <button type="submit" id="btnGuardar">REGISTRAR PACIENTE</button>
             </form>
         </section>
         
