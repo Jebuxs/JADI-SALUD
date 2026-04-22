@@ -1,0 +1,153 @@
+/* DISEÑO JADI SALUD - URBAN MEDICAL STYLE */
+:root {
+    --bg-dark: #0a0a0c;
+    --card-bg: #141418;
+    --accent: #00f2ff; /* Cian Neón */
+    --text-gray: #a0a0a8;
+    --white: #ffffff;
+    --error: #ff4444;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--white);
+    font-family: 'Roboto', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 450px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 4px;
+    margin-bottom: 5px;
+}
+
+.accent {
+    color: var(--accent);
+    text-shadow: 0 0 10px var(--accent);
+}
+
+.subtitle {
+    color: var(--text-gray);
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+/* TARJETA DEL FORMULARIO */
+.form-card {
+    background: var(--card-bg);
+    border: 1px solid #222;
+    padding: 25px;
+    border-radius: 8px;
+    border-left: 4px solid var(--accent);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.card-header h2 {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: var(--white);
+}
+
+.line {
+    width: 40px;
+    height: 3px;
+    background: var(--accent);
+    margin-bottom: 25px;
+}
+
+/* INPUTS Y FORMULARIO */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.65rem;
+    color: var(--accent);
+    margin-bottom: 5px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 12px;
+    background: #000;
+    border: 1px solid #333;
+    color: var(--white);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 5px var(--accent);
+}
+
+.row {
+    display: flex;
+    gap: 15px;
+}
+
+/* BOTÓN */
+button {
+    width: 100%;
+    padding: 15px;
+    background: var(--accent);
+    border: none;
+    color: #000;
+    font-weight: bold;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 10px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #fff;
+    box-shadow: 0 0 20px var(--accent);
+    transform: translateY(-2px);
+}
+
+footer {
+    text-align: center;
+    margin-top: 25px;
+    font-size: 0.6rem;
+    color: var(--text-gray);
+    letter-spacing: 1px;
+}
+
+/* RESPONSIVE PARA CELULAR */
+@media (max-width: 400px) {
+    .row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
