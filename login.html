@@ -2,16 +2,17 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>JADI SALUD | Autenticación</title>
+    <title>JADI SALUD | Login</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        body { background: #0a0a0c; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Roboto'; }
+        body { background: #0a0a0c; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Roboto'; margin: 0; }
         .login-card { background: #141418; padding: 40px; border-radius: 15px; width: 350px; border: 1px solid #222; text-align: center; }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-family: 'Orbitron'; font-weight: bold; }
+        button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-family: 'Orbitron'; font-weight: bold; margin-top: 10px; }
         .btn-login { background: #00f2ff; color: #000; }
-        .btn-google { background: white; color: #555; margin-top: 10px; }
+        .btn-google { background: white; color: #555; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-google img { width: 20px; height: 20px; }
     </style>
 </head>
 <body>
@@ -19,11 +20,14 @@
 <div class="login-card">
     <div id="view-login">
         <h2>INICIAR SESIÓN</h2>
-        <input type="email" id="email" placeholder="Correo">
+        <input type="email" id="email" placeholder="Correo electrónico">
         <input type="password" id="pass" placeholder="Contraseña">
-        <button class="btn-login" onclick="Auth.login(email.value, pass.value)">ENTRAR</button>
-        <button class="btn-google" onclick="Auth.google()">Entrar con Google</button>
-        <p>¿No tienes cuenta? <a href="#" onclick="Auth.showRegister()">Regístrate aquí</a></p>
+        <button class="btn-login" id="btnEntrar">ENTRAR</button>
+        <button class="btn-google" id="btnGoogle">
+            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google">
+            Entrar con Google
+        </button>
+        <p>¿No tienes cuenta? <a href="#" id="linkRegistro" style="color:#00f2ff">Regístrate aquí</a></p>
     </div>
 
     <div id="view-register" style="display:none;">
@@ -31,14 +35,30 @@
         <input type="text" id="regName" placeholder="Nombre del Centro">
         <input type="email" id="regEmail" placeholder="Correo">
         <input type="password" id="regPass" placeholder="Contraseña">
-        <button class="btn-login" onclick="Auth.register(regName.value, regEmail.value, regPass.value)">CREAR CUENTA</button>
-        <p><a href="#" onclick="Auth.showLogin()">Volver al Login</a></p>
+        <button class="btn-login" id="btnRegistro">CREAR CUENTA</button>
+        <p><a href="#" id="linkLogin" style="color:#00f2ff">Volver al Login</a></p>
     </div>
 </div>
 
 <script type="module">
     import { Auth } from './js/auth.js';
-    window.Auth = Auth; // Exponemos para los botones HTML
+
+    // Login
+    document.getElementById('btnEntrar').addEventListener('click', () => {
+        Auth.login(document.getElementById('email').value, document.getElementById('pass').value);
+    });
+
+    // Google
+    document.getElementById('btnGoogle').addEventListener('click', () => Auth.google());
+
+    // Registro
+    document.getElementById('btnRegistro').addEventListener('click', () => {
+        Auth.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPass').value);
+    });
+
+    // Navegación
+    document.getElementById('linkRegistro').addEventListener('click', (e) => { e.preventDefault(); Auth.showRegister(); });
+    document.getElementById('linkLogin').addEventListener('click', (e) => { e.preventDefault(); Auth.showLogin(); });
 </script>
 </body>
 </html>
