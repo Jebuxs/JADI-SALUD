@@ -2,11 +2,14 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JADI SALUD | Acceso</title>
     <style>
         body { background: #0a0a0c; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: sans-serif; margin: 0; }
-        .login-card { background: #141418; padding: 40px; border-radius: 15px; width: 350px; text-align: center; border: 1px solid #333; }
+        .login-card { background: #141418; padding: 25px; border-radius: 15px; width: 90%; max-width: 350px; text-align: center; border: 1px solid #333; }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
+        .input-wrapper { position: relative; }
+        .toggle-password { position: absolute; right: 10px; top: 20px; cursor: pointer; color: #888; }
         button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; margin-top: 10px; }
         .btn-login { background: #00f2ff; color: #000; }
         .btn-google { background: white; color: #555; display: flex; align-items: center; justify-content: center; gap: 10px; }
@@ -18,7 +21,10 @@
     <div id="view-login">
         <h2>INICIAR SESIÓN</h2>
         <input type="email" id="email" placeholder="Correo">
-        <input type="password" id="pass" placeholder="Contraseña">
+        <div class="input-wrapper">
+            <input type="password" id="pass" placeholder="Contraseña">
+            <span class="toggle-password" onclick="togglePass('pass')">👁️</span>
+        </div>
         <button class="btn-login" id="btnEntrar">ENTRAR</button>
         <button class="btn-google" id="btnGoogle">Entrar con Google</button>
         <p><a href="#" id="linkRegistro" style="color:#00f2ff">¿No tienes cuenta? Regístrate</a></p>
@@ -28,16 +34,26 @@
         <h2>REGISTRAR CENTRO</h2>
         <input type="text" id="regName" placeholder="Nombre">
         <input type="email" id="regEmail" placeholder="Correo">
-        <input type="password" id="regPass" placeholder="Contraseña">
+        <div class="input-wrapper">
+            <input type="password" id="regPass" placeholder="Contraseña">
+            <span class="toggle-password" onclick="togglePass('regPass')">👁️</span>
+        </div>
         <button class="btn-login" id="btnRegistro">CREAR CUENTA</button>
         <p><a href="#" id="linkLogin" style="color:#00f2ff">Volver al Login</a></p>
     </div>
 </div>
 
-<script type="module">
-    // Al estar todos en la raíz, solo llamamos al archivo directamente
-    import { Auth } from './auth.js';
+<script>
+    // Función simple para el ojito sin complicar el Auth
+    function togglePass(id) {
+        const input = document.getElementById(id);
+        input.type = input.type === 'password' ? 'text' : 'password';
+    }
+</script>
 
+<script type="module">
+    import { Auth } from './js/auth.js'; // ASEGÚRATE QUE EL ARCHIVO ESTÉ EN LA CARPETA /js/
+    window.Auth = Auth;
     document.getElementById('btnEntrar').addEventListener('click', () => Auth.login(document.getElementById('email').value, document.getElementById('pass').value));
     document.getElementById('btnGoogle').addEventListener('click', () => Auth.google());
     document.getElementById('btnRegistro').addEventListener('click', () => Auth.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPass').value));
