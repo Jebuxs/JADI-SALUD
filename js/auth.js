@@ -28,7 +28,7 @@ export const Auth = {
     login: async (email, pass) => {
         try {
             await signInWithEmailAndPassword(auth, email, pass);
-            alert("Bienvenido a JADI SALUD");
+            alert("¡Bienvenido a JADI SALUD!");
         } catch (e) { alert("Error: " + e.message); }
     },
     register: async (nombre, email, pass) => {
@@ -40,7 +40,7 @@ export const Auth = {
                 idNegocio: businessID,
                 email: email
             });
-            alert("Centro registrado: " + businessID);
+            alert("Centro registrado con éxito. ID: " + businessID);
         } catch (e) { alert("Error: " + e.message); }
     },
     google: async () => {
