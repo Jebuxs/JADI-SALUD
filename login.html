@@ -2,210 +2,43 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iniciar Sesión | JADI SALUD</title>
+    <title>JADI SALUD | Autenticación</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        /* Estilos específicos para el formulario de Login */
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: var(--bg);
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-        }
-
-        .login-card {
-            background: rgba(20, 20, 24, 0.9);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
-            border: 1px solid #222;
-            width: 100%;
-            max-width: 400px;
-            text-align: center;
-        }
-
-        .login-card h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            margin-bottom: 30px;
-            text-shadow: 0 0 10px var(--accent);
-        }
-
-        .input-group {
-            position: relative;
-            margin-bottom: 25px;
-            text-align: left;
-        }
-
-        .input-group label {
-            display: block;
-            color: #aaa;
-            font-size: 0.8rem;
-            margin-bottom: 8px;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #333;
-            color: #fff;
-            border-radius: 5px;
-            font-size: 1rem;
-            transition: all 0.3s;
-        }
-
-        .input-group input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
-        }
-
-        /* El ojito de la contraseña */
-        .toggle-password {
-            position: absolute;
-            right: 15px;
-            top: 38px;
-            color: #666;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-
-        .toggle-password:hover {
-            color: var(--accent);
-        }
-
-        /* Botón Entrar Principal */
-        .btn-login {
-            width: 100%;
-            padding: 15px;
-            background: transparent;
-            border: 2px solid var(--accent);
-            color: var(--accent);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1rem;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s;
-            margin-bottom: 20px;
-        }
-
-        .btn-login:hover {
-            background: var(--accent);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 242, 255, 0.8);
-        }
-
-        /* Botón Entrar con Gmail */
-        .btn-gmail {
-            width: 100%;
-            padding: 12px;
-            background: #fff;
-            border: none;
-            color: #757575;
-            font-family: 'Roboto', sans-serif;
-            font-size: 0.9rem;
-            font-weight: 500;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-bottom: 25px;
-        }
-
-        .btn-gmail:hover {
-            background: #eee;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-        }
-
-        .btn-gmail img {
-            width: 20px;
-            height: 20px;
-        }
-
-        /* Enlace de Registro */
-        .register-link {
-            color: #aaa;
-            font-size: 0.9rem;
-        }
-
-        .register-link a {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: bold;
-            transition: color 0.3s;
-        }
-
-        .register-link a:hover {
-            color: #fff;
-            text-shadow: 0 0 5px var(--accent);
-        }
+        body { background: #0a0a0c; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Roboto'; }
+        .login-card { background: #141418; padding: 40px; border-radius: 15px; width: 350px; border: 1px solid #222; text-align: center; }
+        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #333; color: white; border-radius: 5px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-family: 'Orbitron'; font-weight: bold; }
+        .btn-login { background: #00f2ff; color: #000; }
+        .btn-google { background: white; color: #555; margin-top: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="login-card">
+<div class="login-card">
+    <div id="view-login">
         <h2>INICIAR SESIÓN</h2>
-        
-        <form id="loginForm">
-            <div class="input-group">
-                <label for="email">CORREO ELECTRÓNICO</label>
-                <input type="email" id="email" placeholder="usuario@jadisalud.com" required>
-            </div>
-            
-            <div class="input-group">
-                <label for="password">CONTRASEÑA</label>
-                <input type="password" id="password" placeholder="••••••••" required>
-                <span id="togglePassword" class="toggle-password">👁️</span>
-            </div>
-
-            <button type="submit" class="btn-login">ENTRAR</button>
-        </form>
-
-        <button class="btn-gmail">
-            <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo">
-            Entrar con Google
-        </button>
-
-        <div class="register-link">
-            ¿No tienes cuenta? <a href="registrar-centro.html">Regístrate aquí</a>
-        </div>
+        <input type="email" id="email" placeholder="Correo">
+        <input type="password" id="pass" placeholder="Contraseña">
+        <button class="btn-login" onclick="Auth.login(email.value, pass.value)">ENTRAR</button>
+        <button class="btn-google" onclick="Auth.google()">Entrar con Google</button>
+        <p>¿No tienes cuenta? <a href="#" onclick="Auth.showRegister()">Regístrate aquí</a></p>
     </div>
 
-    <script type="module">
-        // 1. Lógica del ojito de la contraseña
-        const togglePassword = document.getElementById('togglePassword');
-        const password = document.getElementById('password');
+    <div id="view-register" style="display:none;">
+        <h2>REGISTRAR CENTRO</h2>
+        <input type="text" id="regName" placeholder="Nombre del Centro">
+        <input type="email" id="regEmail" placeholder="Correo">
+        <input type="password" id="regPass" placeholder="Contraseña">
+        <button class="btn-login" onclick="Auth.register(regName.value, regEmail.value, regPass.value)">CREAR CUENTA</button>
+        <p><a href="#" onclick="Auth.showLogin()">Volver al Login</a></p>
+    </div>
+</div>
 
-        togglePassword.addEventListener('click', function() {
-            // Cambia el tipo de input de password a text y viceversa
-            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
-            password.setAttribute('type', type);
-            // Cambia el icono (puedes usar iconos reales de FontAwesome luego)
-            this.textContent = type === 'password' ? '👁️' : '🕶️';
-        });
-
-        // 2. Lógica del formulario (Conexión futura con core.js)
-        const form = document.getElementById('loginForm');
-        
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.getElementById('email').value;
-            alert(`Lógica de Login para: ${email} (Falta conectar a Firebase)`);
-            // Aquí llamaríamos a la función del core.js
-        });
-    </script>
+<script type="module">
+    import { Auth } from './js/auth.js';
+    window.Auth = Auth; // Exponemos para los botones HTML
+</script>
 </body>
 </html>
