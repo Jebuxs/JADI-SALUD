@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { JADI_CORE } from '/JADI-SALUD/js/generator.js';
+import { JADI_CORE } from './generator.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwspV-1KcllVyRAbajVPLc0lwsWMOLIco",
