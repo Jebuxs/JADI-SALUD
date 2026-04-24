@@ -1,175 +1,76 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JADI SALUD | Business Suite</title>
+    <link rel="manifest" href="/JADI-SALUD/manifest.json">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="/JADI-SALUD/css/styles.css">
     <style>
         :root { --accent: #00f2ff; --bg: #0a0a0c; --card: #141418; }
-        
-        body { background-color: var(--bg); margin: 0; }
+        body { background-color: var(--bg); margin: 0; font-family: 'Roboto', sans-serif; color: #fff; }
 
-        /* Banner Compacto y Agresivo. */
         .hero {
-            height: 60vh;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2053');
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=2053');
             background-size: cover;
             background-position: center;
             border-bottom: 3px solid var(--accent);
             text-align: center;
+            padding: 20px;
         }
 
-        .hero h1 { font-size: clamp(2rem, 8vw, 4rem); margin: 0; text-shadow: 0 0 20px var(--accent); }
+        .hero h1 { font-size: clamp(2rem, 8vw, 4rem); margin: 0; text-shadow: 0 0 20px var(--accent); font-family: 'Orbitron'; }
         
-        /* Botón Mejorado: Corto y Potente */
         .btn-join {
             margin-top: 30px;
-            padding: 15px 50px;
+            padding: 15px 40px;
             background: var(--accent);
             color: #000;
             font-family: 'Orbitron', sans-serif;
             font-weight: 800;
             text-decoration: none;
             border-radius: 50px;
-            font-size: 1.1rem;
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
-            transition: all 0.3s ease;
             text-transform: uppercase;
         }
 
-        .btn-join:hover { transform: scale(1.1); box-shadow: 0 0 50px var(--accent); background: #fff; }
-
-        /* Barra de Sponsors */
-        .marquee {
-            background: var(--card);
-            padding: 15px 0;
-            overflow: hidden;
-            border-bottom: 1px solid #333;
-        }
-
-        .marquee-inner {
-            display: flex;
-            width: 200%;
-            animation: scroll 25s linear infinite;
-        }
-
-        .marquee-inner span {
-            width: 50%;
-            display: flex;
-            justify-content: space-around;
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent);
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-        }
-
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-        }
-
-        /* Publicidad en Rejilla (Para no dejar espacios) */
         .ads-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 1fr;
             gap: 15px;
             padding: 20px;
-            max-width: 1200px;
+            max-width: 600px;
             margin: auto;
         }
 
-        .ad-card {
-            background: var(--card);
-            padding: 25px;
-            border-radius: 10px;
-            border: 1px solid #222;
-            transition: 0.3s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ad-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-
-        .ad-card h3 { color: var(--accent); margin-top: 0; font-family: 'Orbitron'; font-size: 1rem; }
-        
-        .ad-card p { font-size: 0.85rem; color: #aaa; line-height: 1.4; }
-
-        .icon-box { font-size: 2rem; margin-bottom: 15px; display: block; }
-
-        footer { text-align: center; padding: 40px; color: #444; font-size: 0.8rem; }
+        .ad-card { background: var(--card); padding: 20px; border-radius: 10px; border: 1px solid #222; }
+        .ad-card h3 { color: var(--accent); font-family: 'Orbitron'; font-size: 1rem; }
     </style>
 </head>
 <body>
 
     <section class="hero">
-        <h1 class="accent">JADI SALUD</h1>
-        <p style="color: #fff; letter-spacing: 3px;">TECH MÉDICA DE ÉLITE</p>
+        <h1 id="nombreNegocio">JADI SALUD</h1>
+        <p id="tagline" style="letter-spacing: 3px;">TECH MÉDICA DE ÉLITE</p>
         <a href="login.html" class="btn-join">¡ÚNETE AHORA!</a>
     </section>
 
-    <div class="marquee">
-        <div class="marquee-inner">
-            <span>
-                <b>● AZUCENA MEDICAL</b> <b>● JADI REPAIZ</b> <b>● IDV SKY</b> <b>● FISIO-QUITO</b> <b>● OPTOMETRÍA JADI</b>
-            </span>
-            <span>
-                <b>● AZUCENA MEDICAL</b> <b>● JADI REPAIZ</b> <b>● IDV SKY</b> <b>● FISIO-QUITO</b> <b>● OPTOMETRÍA JADI</b>
-            </span>
-        </div>
-    </div>
-
     <main class="ads-grid">
-        <div class="ad-card">
-            <span class="icon-box">📊</span>
-            <h3>DASHBOARD REAL-TIME</h3>
-            <p>Controla tus ingresos y pacientes en un panel neón de última generación. Datos en vivo.</p>
-        </div>
-
-        <div class="ad-card">
-            <span class="icon-box">🔐</span>
-            <h3>FIREBASE SECURITY</h3>
-            <p>Tus expedientes protegidos con cifrado militar. Privacidad total para tus pacientes.</p>
-        </div>
-
-        <div class="ad-card">
-            <span class="icon-box">📱</span>
-            <h3>ACCESO MÓVIL</h3>
-            <p>Gestiona tu clínica desde el celular. Compatible con Android e iOS sin instalar nada.</p>
-        </div>
-
-        <div class="ad-card">
-            <span class="icon-box">⚡</span>
-            <h3>ID DINÁMICO</h3>
-            <p>Crea links personalizados para cada sucursal en segundos. Tu marca, tu control.</p>
-        </div>
-
-        <div class="ad-card">
-            <span class="icon-box">🧬</span>
-            <h3>HISTORIAL CLÍNICO</h3>
-            <p>Fichas médicas digitales completas con tipos de sangre, alergias y antecedentes.</p>
-        </div>
-
-        <div class="ad-card">
-            <span class="icon-box">🛠️</span>
-            <h3>SOPORTE JADI</h3>
-            <p>Asistencia técnica 24/7. Somos tus aliados en el crecimiento de tu negocio de salud.</p>
-        </div>
+        <div class="ad-card"><h3>📊 DASHBOARD REAL-TIME</h3><p>Controla tus ingresos y pacientes en vivo.</p></div>
+        <div class="ad-card"><h3>🔐 FIREBASE SECURITY</h3><p>Expedientes protegidos con cifrado militar.</p></div>
+        <div class="ad-card"><h3>📱 ACCESO MÓVIL</h3><p>Gestiona tu clínica desde el celular.</p></div>
     </main>
 
-    <footer>
-        <p>© 2026 JADI SOLUTIONS | EL FUTURO ES HOY</p>
-    </footer>
-<script type="module" src="js/core.js"></script>
-<div id="installBanner" style="display:none; position: fixed; bottom: 20px; left: 10%; right: 10%; background: #0a0a0c; border: 1px solid #00f2ff; color: #00f2ff; padding: 15px; border-radius: 10px; text-align: center; font-family: 'Orbitron', sans-serif; font-size: 0.9rem; cursor: pointer; z-index: 9999; box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);">
-    INSTALAR JADI SALUD PARA ACCESO RÁPIDO
-</div>
+    <div id="installBanner" style="display:none; position: fixed; bottom: 20px; left: 5%; right: 5%; background: #0a0a0c; border: 2px solid var(--accent); color: var(--accent); padding: 15px; border-radius: 10px; text-align: center; font-family: 'Orbitron'; z-index: 9999; box-shadow: 0 0 20px rgba(0,242,255,0.4);">
+        INSTALAR JADI SALUD
+    </div>
+
+    <script type="module" src="/JADI-SALUD/js/core.js"></script>
 
 </body>
 </html>
