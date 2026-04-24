@@ -2,9 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>JADI SALUD | Login</title>
+    <title>JADI SALUD | Autenticación</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
     <style>
         body { background: #0a0a0c; color: white; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: 'Roboto'; margin: 0; }
         .login-card { background: #141418; padding: 40px; border-radius: 15px; width: 350px; border: 1px solid #222; text-align: center; }
@@ -41,22 +40,19 @@
 </div>
 
 <script type="module">
+    // Cambiamos a esta ruta relativa que es la más segura en GitHub Pages
     import { Auth } from './js/auth.js';
 
-    // Login
     document.getElementById('btnEntrar').addEventListener('click', () => {
         Auth.login(document.getElementById('email').value, document.getElementById('pass').value);
     });
 
-    // Google
     document.getElementById('btnGoogle').addEventListener('click', () => Auth.google());
 
-    // Registro
     document.getElementById('btnRegistro').addEventListener('click', () => {
         Auth.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPass').value);
     });
 
-    // Navegación
     document.getElementById('linkRegistro').addEventListener('click', (e) => { e.preventDefault(); Auth.showRegister(); });
     document.getElementById('linkLogin').addEventListener('click', (e) => { e.preventDefault(); Auth.showLogin(); });
 </script>
