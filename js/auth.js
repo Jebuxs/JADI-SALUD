@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10
 import { JADI_CORE } from './generator.js';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAwspV-1KcllVyRAbajVPLc0lwsWMOLIco",
+    apiKey: "AIzaSyAwspV-1KcllVyRAbajVPLc0lwsWMOLIco", 
     authDomain: "jadi-salud.firebaseapp.com",
     projectId: "jadi-salud",
     storageBucket: "jadi-salud.firebasestorage.app",
