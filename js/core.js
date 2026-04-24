@@ -4,7 +4,7 @@ const installBanner = document.getElementById('installBanner'); // Asegúrate qu
 
 if ('serviceWorker' in navigator) {
     // Nota: Ajusta la ruta si es necesario, ej: '/JADI-SALUD/sw.js'
-    navigator.serviceWorker.register('/JADI-SALUD/sw.js');
+   navigator.serviceWorker.register('./sw.js');
 }
 
 window.addEventListener('beforeinstallprompt', (e) => {
