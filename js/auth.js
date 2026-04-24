@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { JADI_CORE } from '/JADI-SALUD/js/generator.js';
+// Ahora busca generator.js en la misma carpeta que auth.js
+import { JADI_CORE } from './generator.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwspV-1KcllVyRAbajVPLc0lwsWMOLIco",
@@ -40,11 +41,11 @@ export const Auth = {
                 idNegocio: businessID,
                 email: email
             });
-            alert("Registro exitoso. ID: " + businessID);
+            alert("Centro registrado. ID: " + businessID);
         } catch (e) { alert("Error: " + e.message); }
     },
     google: async () => {
         try { await signInWithPopup(auth, provider); alert("Sesión con Google exitosa"); }
-        catch (e) { alert("Error Google: " + e.message); }
+        catch (e) { alert("Error: " + e.message); }
     }
 };
