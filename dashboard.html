@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>JADI SALUD | Dashboard</title>
+    <style>
+        body { background: #0a0a0c; color: white; font-family: sans-serif; padding: 20px; }
+        .nav { display: flex; justify-content: space-between; border-bottom: 1px solid #333; padding-bottom: 10px; }
+    </style>
+</head>
+<body>
+    <div class="nav">
+        <h1>Dashboard Principal</h1>
+        <button onclick="auth.signOut()">Cerrar Sesión</button>
+    </div>
+    <div id="content">
+        <h2>Bienvenido a tu centro médico</h2>
+        <p>Aquí verás tus servicios y pacientes.</p>
+    </div>
+
+    <script type="module" src="js/init.js"></script>
+</body>
+</html>
