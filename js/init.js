@@ -4,39 +4,34 @@ import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10
 const auth = getAuth();
 const db = getFirestore();
 
-// Hacemos que signOut sea accesible globalmente para el botón del dashboard
+// Hacemos que signOut sea global
 window.auth = { signOut: () => signOut(auth) };
 
 onAuthStateChanged(auth, async (user) => {
+    // 1. Si no hay usuario, obligar a ir a login
     if (!user) {
-        // Si no hay usuario, regresa al login
-        window.location.href = "login.html";
+        if (!window.location.pathname.includes("login.html")) {
+            window.location.href = "login.html";
+        }
         return;
     }
 
-    // Si hay usuario, verificamos su configuración
+    // 2. Si hay usuario, consultar su estado en la base de datos
     const docSnap = await getDoc(doc(db, "centros", user.uid));
     
     if (docSnap.exists()) {
         const data = docSnap.data();
-        
-        // Si el usuario llega a dashboard.html pero no está configurado, mándalo a setup
-        if (data.configurado === false && window.location.pathname !== "/setup.html") {
-            window.location.href = "setup.html";
-        }
-        // Si ya está configurado, no hacemos nada, que vea el dashboard
-        onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const docSnap = await getDoc(doc(db, "centros", user.uid));
-        const data = docSnap.data();
 
-        // Si NO está configurado y está intentando entrar al dashboard...
-        if (!data.configurado && window.location.pathname.includes("dashboard.html")) {
-            window.location.href = "setup.html"; // ¡De vuelta al setup!
+        // 3. Lógica de redirección inteligente
+        const estaEnDashboard = window.location.pathname.includes("dashboard.html");
+        const estaEnSetup = window.location.pathname.includes("setup.html");
+
+        if (data.configurado === false && estaEnDashboard) {
+            // Si no está configurado y está en dashboard, enviarlo a setup
+            window.location.href = "setup.html";
+        } else if (data.configurado === true && estaEnSetup) {
+            // Si ya configuró y está en setup, llevarlo a dashboard
+            window.location.href = "dashboard.html";
         }
-    } else {
-        window.location.href = "login.html";
-    }
-});
     }
 });
