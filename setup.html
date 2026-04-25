@@ -1,27 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Configuración Inicial | JADI SALUD</title>
-    <style>
-        body { background: #0a0a0c; color: white; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .card { background: #141418; padding: 30px; border-radius: 15px; width: 100%; max-width: 400px; border: 1px solid #333; }
-        input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
-        button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; margin-top: 10px; }
-        .btn-add { background: #333; color: white; }
-        .btn-save { background: #00f2ff; color: #000; margin-top: 20px; }
-        ul { list-style: none; padding: 0; }
-        li { background: #1a1a20; padding: 10px; margin: 5px 0; border-radius: 5px; display: flex; justify-content: space-between; }
-    </style>
-</head>
-<body>
-
 <div class="card">
-    <h2>Configura tus Servicios</h2>
-    <p>Agrega los servicios que ofrecerás en tu centro.</p>
+    <h2>Configura tu Centro Médico</h2>
+    <p>Completa la información básica para comenzar.</p>
     
-    <input type="text" id="servicio" placeholder="Ej: Medicina General">
+    <label>Nombre del Establecimiento</label>
+    <input type="text" id="nombreEstablecimiento" placeholder="Ej: Clínica San José">
+
+    <label>Tus Servicios</label>
+    <input type="text" id="servicioInput" placeholder="Ej: Medicina General">
     <button class="btn-add" id="btnAgregar">Agregar Servicio</button>
 
     <ul id="listaServicios"></ul>
@@ -30,5 +15,3 @@
 </div>
 
 <script type="module" src="js/setup.js"></script>
-</body>
-</html>
