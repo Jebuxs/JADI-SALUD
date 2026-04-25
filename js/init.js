@@ -25,5 +25,18 @@ onAuthStateChanged(auth, async (user) => {
             window.location.href = "setup.html";
         }
         // Si ya está configurado, no hacemos nada, que vea el dashboard
+        onAuthStateChanged(auth, async (user) => {
+    if (user) {
+        const docSnap = await getDoc(doc(db, "centros", user.uid));
+        const data = docSnap.data();
+
+        // Si NO está configurado y está intentando entrar al dashboard...
+        if (!data.configurado && window.location.pathname.includes("dashboard.html")) {
+            window.location.href = "setup.html"; // ¡De vuelta al setup!
+        }
+    } else {
+        window.location.href = "login.html";
+    }
+});
     }
 });
