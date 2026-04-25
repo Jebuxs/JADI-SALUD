@@ -60,6 +60,20 @@ export const Auth = {
                     configurado: false
                 });
                 alert("¡Bienvenido! Centro creado con ID: " + businessID);
+                if (!docSnap.exists()) {
+        const businessID = JADI_CORE.generateBusinessID(user.displayName); // Asegúrate de que este sea el nombre correcto de tu función
+        await setDoc(docRef, {
+            nombre: user.displayName,
+            idNegocio: businessID,
+            email: user.email,
+            configurado: false 
+        });
+        alert("¡Bienvenido! Centro creado.");
+        window.location.href = "setup.html"; // Redirige al Setup
+    } else {
+        alert("Bienvenido de nuevo.");
+        window.location.href = "dashboard.html"; // Redirige al Dashboard
+    }
             } else {
                 alert("Bienvenido de nuevo.");
             }
