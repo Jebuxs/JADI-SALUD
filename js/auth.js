@@ -1,7 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-// Ahora busca generator.js en la misma carpeta que auth.js
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { JADI_CORE } from './generator.js';
 
 const firebaseConfig = {
@@ -39,13 +38,34 @@ export const Auth = {
             await setDoc(doc(db, "centros", userCredential.user.uid), {
                 nombre: nombre,
                 idNegocio: businessID,
-                email: email
+                email: email,
+                configurado: false
             });
             alert("Centro registrado. ID: " + businessID);
         } catch (e) { alert("Error: " + e.message); }
     },
     google: async () => {
-        try { await signInWithPopup(auth, provider); alert("Sesión con Google exitosa"); }
-        catch (e) { alert("Error: " + e.message); }
+        try {
+            const result = await signInWithPopup(auth, provider);
+            const user = result.user;
+            const docRef = doc(db, "centros", user.uid);
+            const docSnap = await getDoc(docRef);
+
+            if (!docSnap.exists()) {
+                const businessID = JADI_CORE.generateBusinessID(user.displayName);
+                await setDoc(docRef, {
+                    nombre: user.displayName,
+                    idNegocio: businessID,
+                    email: user.email,
+                    configurado: false
+                });
+                alert("¡Bienvenido! Centro creado con ID: " + businessID);
+            } else {
+                alert("Bienvenido de nuevo.");
+            }
+        } catch (e) { 
+            console.error(e);
+            alert("Error: " + e.message); 
+        }
     }
 };
