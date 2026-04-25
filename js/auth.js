@@ -43,8 +43,7 @@ export const Auth = {
             });
             alert("Centro registrado. ID: " + businessID);
         } catch (e) { alert("Error: " + e.message); }
-    },
-    google: async () => {
+    },google: async () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
@@ -52,30 +51,20 @@ export const Auth = {
             const docSnap = await getDoc(docRef);
 
             if (!docSnap.exists()) {
+                // Caso: Usuario nuevo
                 const businessID = JADI_CORE.generateBusinessID(user.displayName);
                 await setDoc(docRef, {
                     nombre: user.displayName,
                     idNegocio: businessID,
                     email: user.email,
-                    configurado: false
+                    configurado: false 
                 });
-                alert("¡Bienvenido! Centro creado con ID: " + businessID);
-                if (!docSnap.exists()) {
-        const businessID = JADI_CORE.generateBusinessID(user.displayName); // Asegúrate de que este sea el nombre correcto de tu función
-        await setDoc(docRef, {
-            nombre: user.displayName,
-            idNegocio: businessID,
-            email: user.email,
-            configurado: false 
-        });
-        alert("¡Bienvenido! Centro creado.");
-        window.location.href = "setup.html"; // Redirige al Setup
-    } else {
-        alert("Bienvenido de nuevo.");
-        window.location.href = "dashboard.html"; // Redirige al Dashboard
-    }
+                alert("¡Bienvenido! Centro creado.");
+                window.location.href = "setup.html"; // Redirige al Setup
             } else {
+                // Caso: Usuario que ya existe
                 alert("Bienvenido de nuevo.");
+                window.location.href = "dashboard.html"; // Redirige al Dashboard
             }
         } catch (e) { 
             console.error(e);
