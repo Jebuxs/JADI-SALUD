@@ -1,20 +1,29 @@
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const auth = getAuth();
 const db = getFirestore();
 
+// Hacemos que signOut sea accesible globalmente para el botón del dashboard
+window.auth = { signOut: () => signOut(auth) };
+
 onAuthStateChanged(auth, async (user) => {
-    if (user) {
-        const docSnap = await getDoc(doc(db, "centros", user.uid));
-        
-        if (docSnap.exists() && docSnap.data().configurado === false) {
-            // El usuario existe pero NO está configurado -> Redirigir al Setup
-            window.location.href = "setup.html"; 
-        } else {
-            console.log("Sistema listo, cargando dashboard...");
-        }
-    } else {
+    if (!user) {
+        // Si no hay usuario, regresa al login
         window.location.href = "login.html";
+        return;
+    }
+
+    // Si hay usuario, verificamos su configuración
+    const docSnap = await getDoc(doc(db, "centros", user.uid));
+    
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        
+        // Si el usuario llega a dashboard.html pero no está configurado, mándalo a setup
+        if (data.configurado === false && window.location.pathname !== "/setup.html") {
+            window.location.href = "setup.html";
+        }
+        // Si ya está configurado, no hacemos nada, que vea el dashboard
     }
 });
