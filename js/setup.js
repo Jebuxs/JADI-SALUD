@@ -3,43 +3,48 @@ import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstat
 
 const auth = getAuth();
 const db = getFirestore();
-let lista = [];
+let servicios = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('btnAgregar').addEventListener('click', () => {
+    console.log("Setup cargado");
+
+    document.getElementById('btnAgregar').onclick = () => {
         const input = document.getElementById('servicioInput');
-        if (input.value.trim()) {
-            lista.push(input.value);
+        if (input.value.trim() !== "") {
+            servicios.push(input.value.trim());
             const li = document.createElement('li');
             li.textContent = input.value;
             document.getElementById('listaServicios').appendChild(li);
             input.value = "";
         }
-    });
+    };
 
-    document.getElementById('btnFinalizar').addEventListener('click', async () => {
+    document.getElementById('btnFinalizar').onclick = async () => {
         const user = auth.currentUser;
         const nombre = document.getElementById('nombreEstablecimiento').value.trim();
 
-        if (!nombre || lista.length === 0) return alert("Completa nombre y servicios");
+        if (!user) return alert("Error: No hay sesión.");
+        if (!nombre || servicios.length === 0) return alert("Completa nombre y servicios.");
 
         try {
-            // USAMOS setDoc con {merge: true} para crear o actualizar sin borrar otros datos
+            console.log("Guardando...");
+            // 1. Guardar centro
             await setDoc(doc(db, "centros", user.uid), {
                 nombreEstablecimiento: nombre,
                 configurado: true
             }, { merge: true });
 
-            const subCol = collection(doc(db, "centros", user.uid), "servicios");
-            for(let s of lista) { 
-                await addDoc(subCol, { nombre: s, fecha: new Date() }); 
+            // 2. Guardar servicios
+            const col = collection(db, "centros", user.uid, "servicios");
+            for (let s of servicios) {
+                await addDoc(col, { nombre: s, fecha: new Date() });
             }
 
-            alert("Configuración completada");
+            console.log("Redirigiendo...");
             window.location.href = "dashboard.html";
-        } catch(e) { 
+        } catch (e) {
             console.error(e);
-            alert("Error: " + e.message); 
+            alert("Error: " + e.message);
         }
-    });
+    };
 });
