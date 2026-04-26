@@ -1,60 +1,45 @@
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, updateDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const auth = getAuth();
 const db = getFirestore();
-let serviciosTemporales = [];
+let lista = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    const btnAgregar = document.getElementById('btnAgregar');
-    const btnFinalizar = document.getElementById('btnFinalizar');
-
-    if (!btnAgregar || !btnFinalizar) {
-        console.error("Error: No se encontraron los botones en el HTML. Verifica los IDs.");
-        return;
-    }
-
-    btnAgregar.addEventListener('click', () => {
+    document.getElementById('btnAgregar').addEventListener('click', () => {
         const input = document.getElementById('servicioInput');
-        const nombreServicio = input.value.trim();
-
-        if (nombreServicio !== "") {
-            serviciosTemporales.push(nombreServicio);
+        if (input.value.trim()) {
+            lista.push(input.value);
             const li = document.createElement('li');
-            li.textContent = nombreServicio;
-            li.style.color = "#00f2ff";
+            li.textContent = input.value;
             document.getElementById('listaServicios').appendChild(li);
-            input.value = ""; 
-        } else {
-            alert("Escribe un nombre para el servicio.");
+            input.value = "";
         }
     });
 
-    btnFinalizar.addEventListener('click', async () => {
+    document.getElementById('btnFinalizar').addEventListener('click', async () => {
         const user = auth.currentUser;
-        const nombreEst = document.getElementById('nombreEstablecimiento').value.trim();
+        const nombre = document.getElementById('nombreEstablecimiento').value.trim();
 
-        if (!user) return alert("Sesión expirada. Ingresa de nuevo.");
-        if (nombreEst === "") return alert("Por favor, ponle un nombre a tu establecimiento.");
-        if (serviciosTemporales.length === 0) return alert("Agrega al menos un servicio.");
+        if (!nombre || lista.length === 0) return alert("Completa nombre y servicios");
 
         try {
-            const centroRef = doc(db, "centros", user.uid);
-            await updateDoc(centroRef, {
-                nombreEstablecimiento: nombreEst,
+            // USAMOS setDoc con {merge: true} para crear o actualizar sin borrar otros datos
+            await setDoc(doc(db, "centros", user.uid), {
+                nombreEstablecimiento: nombre,
                 configurado: true
-            });
+            }, { merge: true });
 
-            const serviciosCol = collection(centroRef, "servicios");
-            for (let s of serviciosTemporales) {
-                await addDoc(serviciosCol, { nombre: s, fecha: new Date() });
+            const subCol = collection(doc(db, "centros", user.uid), "servicios");
+            for(let s of lista) { 
+                await addDoc(subCol, { nombre: s, fecha: new Date() }); 
             }
 
-            alert("¡Configuración guardada!");
+            alert("Configuración completada");
             window.location.href = "dashboard.html";
-        } catch (error) {
-            console.error("Error:", error);
-            alert("Error al guardar: " + error.message);
+        } catch(e) { 
+            console.error(e);
+            alert("Error: " + e.message); 
         }
     });
 });
