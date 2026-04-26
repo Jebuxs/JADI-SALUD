@@ -28,7 +28,7 @@ export const Auth = {
     login: async (email, pass) => {
         try {
             await signInWithEmailAndPassword(auth, email, pass);
-            alert("¡Bienvenido!");
+            // No redirigimos aquí. init.js lo hará al detectar el cambio de estado.
         } catch (e) { alert("Error: " + e.message); }
     },
     register: async (nombre, email, pass) => {
@@ -41,9 +41,11 @@ export const Auth = {
                 email: email,
                 configurado: false
             });
-            alert("Centro registrado. ID: " + businessID);
+            alert("Centro registrado.");
+            // init.js detectará el usuario y redirigirá al setup.
         } catch (e) { alert("Error: " + e.message); }
-    },google: async () => {
+    },
+    google: async () => {
         try {
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
@@ -60,13 +62,14 @@ export const Auth = {
                     configurado: false 
                 });
                 alert("¡Bienvenido! Centro creado.");
-                window.location.href = "setup.html"; // Redirige al Setup
+                // Redirigimos aquí solo si es registro nuevo, 
+                // pero el init.js de setup.html reforzará esto.
+                window.location.href = "setup.html"; 
             } else {
                 // Caso: Usuario que ya existe
                 alert("Bienvenido de nuevo.");
-                //window.location.href = "dashboard.html"; // Redirige al Dashboard
-                <script type="module" src="js/init.js"></script>
-
+                // Al salir de esta función, init.js detectará que el usuario ya existe
+                // y te llevará al dashboard automáticamente.
             }
         } catch (e) { 
             console.error(e);
