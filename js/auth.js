@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { JADI_CORE } from './generator.js';
 
@@ -33,6 +33,18 @@ export const Auth = {
             const cred = await signInWithEmailAndPassword(auth, email, pass);
             await verificarRedireccion(cred.user.uid);
         } catch (e) { alert("Error: " + e.message); }
+    },
+
+    register: async (name, email, pass) => {
+        try {
+            const cred = await createUserWithEmailAndPassword(auth, email, pass);
+            await setDoc(doc(db, "centros", cred.user.uid), {
+                nombre: name,
+                email: email,
+                configurado: false
+            });
+            window.location.href = "setup.html";
+        } catch (e) { alert("Error al registrar: " + e.message); }
     },
 
     google: async () => {
