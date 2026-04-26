@@ -11,6 +11,7 @@
         button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; margin-top: 10px; }
         .btn-login { background: #00f2ff; color: #000; }
         .btn-google { background: white; color: #555; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .eye-icon { position: absolute; right: 15px; top: 15px; cursor: pointer; color: #666; }
     </style>
 </head>
 <body>
@@ -18,29 +19,32 @@
     <div id="view-login">
         <h2>INICIAR SESIÓN</h2>
         <input type="email" id="email" placeholder="Correo">
-        <input type="password" id="pass" placeholder="Contraseña">
+        <div style="position:relative;">
+            <input type="password" id="pass" placeholder="Contraseña">
+            <span class="eye-icon" onclick="togglePass()">👁️</span>
+        </div>
         <button class="btn-login" id="btnEntrar">ENTRAR</button>
-        <button class="btn-google" id="btnGoogle">Entrar con Google</button>
+        <button class="btn-google" id="btnGoogle">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" width="18">
+            Entrar con Google
+        </button>
         <p><a href="#" id="linkRegistro" style="color:#00f2ff">¿No tienes cuenta? Regístrate</a></p>
     </div>
-    <div id="view-register" style="display:none;">
-        <h2>REGISTRAR CENTRO</h2>
-        <input type="text" id="regName" placeholder="Nombre">
-        <input type="email" id="regEmail" placeholder="Correo">
-        <input type="password" id="regPass" placeholder="Contraseña">
-        <button class="btn-login" id="btnRegistro">CREAR CUENTA</button>
-        <p><a href="#" id="linkLogin" style="color:#00f2ff">Volver al Login</a></p>
     </div>
-</div>
+
+<script>
+    function togglePass() {
+        const p = document.getElementById('pass');
+        p.type = p.type === 'password' ? 'text' : 'password';
+    }
+</script>
+
 <script type="module">
     import { Auth } from './js/auth.js';
     window.Auth = Auth;
     document.getElementById('btnEntrar').addEventListener('click', () => Auth.login(document.getElementById('email').value, document.getElementById('pass').value));
     document.getElementById('btnGoogle').addEventListener('click', () => Auth.google());
-    document.getElementById('btnRegistro').addEventListener('click', () => Auth.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPass').value));
-    document.getElementById('linkRegistro').addEventListener('click', (e) => { e.preventDefault(); Auth.showRegister(); });
-    document.getElementById('linkLogin').addEventListener('click', (e) => { e.preventDefault(); Auth.showLogin(); });
+    // ... tus otros listeners ...
 </script>
-    <script type="module" src="js/init.js"></script>
 </body>
 </html>
