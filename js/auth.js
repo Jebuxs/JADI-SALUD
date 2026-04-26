@@ -64,7 +64,9 @@ export const Auth = {
             } else {
                 // Caso: Usuario que ya existe
                 alert("Bienvenido de nuevo.");
-                window.location.href = "dashboard.html"; // Redirige al Dashboard
+                //window.location.href = "dashboard.html"; // Redirige al Dashboard
+                <script type="module" src="js/init.js"></script>
+
             }
         } catch (e) { 
             console.error(e);
