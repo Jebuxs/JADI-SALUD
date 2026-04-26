@@ -50,6 +50,9 @@
 <script type="module">
     import { Auth } from './js/auth.js';
     window.Auth = Auth;
+    
+    // Verifica si regresamos de Google al cargar la página
+    window.onload = () => Auth.handleRedirect();
 
     document.getElementById('btnEntrar').addEventListener('click', () => {
         Auth.login(document.getElementById('email').value, document.getElementById('pass').value);
