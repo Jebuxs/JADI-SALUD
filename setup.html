@@ -7,11 +7,10 @@
         body { background: #0a0a0c; color: white; font-family: sans-serif; display: flex; justify-content: center; padding: 20px; }
         .card { background: #141418; padding: 30px; border-radius: 15px; width: 100%; max-width: 450px; }
         input { width: 100%; padding: 12px; margin: 10px 0; background: #000; border: 1px solid #444; color: white; border-radius: 5px; box-sizing: border-box; }
-        .status { font-size: 20px; margin-left: 10px; }
-        .btn-add { background: #444; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; }
+        .btn-add { background: #444; color: white; border: none; padding: 12px; border-radius: 5px; cursor: pointer; width: 100%; }
         .service-list { margin: 20px 0; list-style: none; padding: 0; }
         .service-item { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #333; }
-        .btn-final { background: #00f2ff; color: #000; width: 100%; padding: 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        .btn-final { background: #00f2ff; color: #000; width: 100%; padding: 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -19,15 +18,14 @@
     <h2>Configurar Establecimiento</h2>
     <div style="display:flex; align-items:center;">
         <input type="text" id="nombreNegocio" placeholder="Nombre del Establecimiento">
-        <span id="status" class="status"></span>
+        <span id="status" style="margin-left:10px; font-size:20px;"></span>
     </div>
-    <div style="display:flex; gap:10px;">
-        <input type="text" id="servicioInput" placeholder="Añadir Servicio...">
-        <button class="btn-add" id="btnAgregarServ">Añadir</button>
-    </div>
+    <input type="text" id="servicioInput" placeholder="Añadir Servicio...">
+    <button class="btn-add" id="btnAgregarServ">Añadir Servicio</button>
     <ul id="listaServicios" class="service-list"></ul>
     <button class="btn-final" id="btnFinalizar" disabled>Finalizar Configuración</button>
 </div>
+
 <script type="module" src="js/setup.js"></script>
 </body>
 </html>
