@@ -11,7 +11,7 @@
         button { width: 100%; padding: 12px; cursor: pointer; border-radius: 5px; border: none; font-weight: bold; margin-top: 10px; }
         .btn-login { background: #00f2ff; color: #000; }
         .btn-google { background: white; color: #555; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .eye-icon { position: absolute; right: 15px; top: 15px; cursor: pointer; color: #666; }
+        .eye-icon { position: absolute; right: 15px; top: 22px; cursor: pointer; color: #666; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -30,7 +30,15 @@
         </button>
         <p><a href="#" id="linkRegistro" style="color:#00f2ff">¿No tienes cuenta? Regístrate</a></p>
     </div>
+    <div id="view-register" style="display:none;">
+        <h2>REGISTRAR CENTRO</h2>
+        <input type="text" id="regName" placeholder="Nombre">
+        <input type="email" id="regEmail" placeholder="Correo">
+        <input type="password" id="regPass" placeholder="Contraseña">
+        <button class="btn-login" id="btnRegistro">CREAR CUENTA</button>
+        <p><a href="#" id="linkLogin" style="color:#00f2ff">Volver al Login</a></p>
     </div>
+</div>
 
 <script>
     function togglePass() {
@@ -42,9 +50,18 @@
 <script type="module">
     import { Auth } from './js/auth.js';
     window.Auth = Auth;
-    document.getElementById('btnEntrar').addEventListener('click', () => Auth.login(document.getElementById('email').value, document.getElementById('pass').value));
+
+    document.getElementById('btnEntrar').addEventListener('click', () => {
+        Auth.login(document.getElementById('email').value, document.getElementById('pass').value);
+    });
+
     document.getElementById('btnGoogle').addEventListener('click', () => Auth.google());
-    // ... tus otros listeners ...
+    document.getElementById('btnRegistro').addEventListener('click', () => {
+        Auth.register(document.getElementById('regName').value, document.getElementById('regEmail').value, document.getElementById('regPass').value);
+    });
+
+    document.getElementById('linkRegistro').addEventListener('click', (e) => { e.preventDefault(); Auth.showRegister(); });
+    document.getElementById('linkLogin').addEventListener('click', (e) => { e.preventDefault(); Auth.showLogin(); });
 </script>
 </body>
 </html>
