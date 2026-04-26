@@ -1,50 +1,56 @@
+import { getFirestore, doc, updateDoc, collection, query, where, getDocs, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const auth = getAuth();
 const db = getFirestore();
-let servicios = [];
+const auth = getAuth();
+let serviciosArray = [];
+let esValido = false;
 
-document.addEventListener('DOMContentLoaded', () => {
-    console.log("Setup cargado");
+// Formateador de Slug
+const crearSlug = (nombre) => nombre.toUpperCase().replace(/\s+/g, '_').substring(0, 15);
 
-    document.getElementById('btnAgregar').onclick = () => {
-        const input = document.getElementById('servicioInput');
-        if (input.value.trim() !== "") {
-            servicios.push(input.value.trim());
-            const li = document.createElement('li');
-            li.textContent = input.value;
-            document.getElementById('listaServicios').appendChild(li);
-            input.value = "";
-        }
-    };
+// Validación Inmediata
+document.getElementById('nombreNegocio').addEventListener('blur', async (e) => {
+    const nombre = e.target.value;
+    const status = document.getElementById('status');
+    if (!nombre) return;
 
-    document.getElementById('btnFinalizar').onclick = async () => {
-        const user = auth.currentUser;
-        const nombre = document.getElementById('nombreEstablecimiento').value.trim();
+    const q = query(collection(db, "centros"), where("slug", "==", crearSlug(nombre)));
+    const querySnapshot = await getDocs(q);
 
-        if (!user) return alert("Error: No hay sesión.");
-        if (!nombre || servicios.length === 0) return alert("Completa nombre y servicios.");
+    if (querySnapshot.empty) {
+        status.innerHTML = "✅"; 
+        esValido = true;
+    } else {
+        status.innerHTML = "❌";
+        alert("El nombre ya está ocupado.");
+        e.target.focus();
+        esValido = false;
+    }
+});
 
-        try {
-            console.log("Guardando...");
-            // 1. Guardar centro
-            await setDoc(doc(db, "centros", user.uid), {
-                nombreEstablecimiento: nombre,
-                configurado: true
-            }, { merge: true });
+// Agregar Servicio
+document.getElementById('btnAgregarServ').addEventListener('click', () => {
+    const input = document.getElementById('servicioInput');
+    if (!input.value) return alert("Debes escribir un servicio");
+    
+    serviciosArray.push(input.value);
+    const li = document.createElement('li');
+    li.className = 'service-item';
+    li.innerHTML = `${input.value} <span onclick="this.parentElement.remove()" style="color:red; cursor:pointer;">X</span>`;
+    document.getElementById('listaServicios').appendChild(li);
+    input.value = '';
+    document.getElementById('btnFinalizar').disabled = false;
+});
 
-            // 2. Guardar servicios
-            const col = collection(db, "centros", user.uid, "servicios");
-            for (let s of servicios) {
-                await addDoc(col, { nombre: s, fecha: new Date() });
-            }
-
-            console.log("Redirigiendo...");
-            window.location.href = "dashboard.html";
-        } catch (e) {
-            console.error(e);
-            alert("Error: " + e.message);
-        }
-    };
+// Finalizar
+document.getElementById('btnFinalizar').addEventListener('click', async () => {
+    if (!esValido) return;
+    const uid = auth.currentUser.uid;
+    await updateDoc(doc(db, "centros", uid), {
+        slug: crearSlug(document.getElementById('nombreNegocio').value),
+        servicios: serviciosArray,
+        configurado: true
+    });
+    window.location.href = "dashboard.html";
 });
