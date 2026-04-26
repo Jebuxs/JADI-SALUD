@@ -1,7 +1,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { JADI_CORE } from './generator.js'; // Verifica que generator.js esté en la carpeta js
+import { getAuth, signInWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { JADI_CORE } from './generator.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwspV-1KcllVyRAbajVPLc0lwsWMOLIco", 
@@ -17,13 +17,11 @@ const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
 async function verificarRedireccion(uid) {
-    try {
-        const docSnap = await getDoc(doc(db, "centros", uid));
-        if (docSnap.exists()) {
-            const data = docSnap.data();
-            window.location.href = data.configurado === true ? "dashboard.html" : "setup.html";
-        }
-    } catch (e) { console.error("Error al verificar:", e); }
+    const docSnap = await getDoc(doc(db, "centros", uid));
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        window.location.href = data.configurado === true ? "dashboard.html" : "setup.html";
+    }
 }
 
 export const Auth = {
@@ -38,22 +36,28 @@ export const Auth = {
     },
 
     google: async () => {
-        try {
-            const result = await signInWithPopup(auth, provider);
-            const user = result.user;
-            const docRef = doc(db, "centros", user.uid);
-            const docSnap = await getDoc(docRef);
+        try { await signInWithRedirect(auth, provider); } 
+        catch (e) { alert("Error: " + e.message); }
+    },
 
-            if (!docSnap.exists()) {
-                await setDoc(docRef, {
-                    nombre: user.displayName,
-                    idNegocio: JADI_CORE.generateBusinessID(user.displayName),
-                    email: user.email,
-                    configurado: false 
-                });
+    handleRedirect: async () => {
+        try {
+            const result = await getRedirectResult(auth);
+            if (result) {
+                const user = result.user;
+                const docRef = doc(db, "centros", user.uid);
+                const docSnap = await getDoc(docRef);
+                if (!docSnap.exists()) {
+                    await setDoc(docRef, {
+                        nombre: user.displayName,
+                        idNegocio: JADI_CORE.generateBusinessID(user.displayName),
+                        email: user.email,
+                        configurado: false 
+                    });
+                }
+                alert("JADI-SALUD TE DA LA BIENVENIDA");
+                await verificarRedireccion(user.uid);
             }
-            alert("JADI-SALUD TE DA LA BIENVENIDA");
-            await verificarRedireccion(user.uid);
-        } catch (e) { alert("Error: " + e.message); }
+        } catch (e) { console.error(e); }
     }
 };
