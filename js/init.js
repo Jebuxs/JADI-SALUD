@@ -1,42 +1,35 @@
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
 const auth = getAuth();
 const db = getFirestore();
 
-// Hacemos que signOut sea global para usarlo en tus botones de cierre de sesión
-window.auth = { signOut: () => signOut(auth) };
-
 onAuthStateChanged(auth, async (user) => {
-    const path = window.location.pathname;
-
-    // 1. Si no hay usuario, redirigir a login (si no está ya ahí)
     if (!user) {
-        if (!path.includes("login.html")) {
-            window.location.href = "login.html";
-        }
+        window.location.href = "login.html";
         return;
     }
 
-    // 2. Si hay usuario, consultar si ya configuró su centro
-    try {
-        const docSnap = await getDoc(doc(db, "centros", user.uid));
-        const estaConfigurado = docSnap.exists() && docSnap.data().configurado === true;
+    const docSnap = await getDoc(doc(db, "centros", user.uid));
+    const path = window.location.pathname;
 
-        // 3. Reglas de redirección estrictas
-        if (!estaConfigurado) {
-            // Si NO está configurado, solo puede estar en setup.html
+    if (docSnap.exists()) {
+        const data = docSnap.data();
+        console.log("Estado de configuración:", data.configurado); // Mira esto en la consola
+
+        // REGLA DE ORO: Si es false, te echo al setup inmediatamente
+        if (data.configurado !== true) {
             if (!path.includes("setup.html")) {
-                console.log("Redirigiendo a configuración...");
+                console.warn("Acceso denegado. Redirigiendo a setup...");
                 window.location.href = "setup.html";
             }
-        } else {
-            // Si YA está configurado, NO debe estar en setup.html ni en login
-            if (path.includes("setup.html") || path.includes("login.html")) {
-                window.location.href = "dashboard.html";
-            }
+        } 
+        // REGLA DE ORO 2: Si ya es true, no te dejo volver al setup
+        else if (path.includes("setup.html")) {
+            window.location.href = "dashboard.html";
         }
-    } catch (error) {
-        console.error("Error al verificar estado:", error);
+    } else {
+        // Si no existe el documento, forzar a setup
+        if (!path.includes("setup.html")) window.location.href = "setup.html";
     }
 });
