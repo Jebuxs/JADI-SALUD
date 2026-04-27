@@ -5,18 +5,30 @@ const auth = getAuth();
 const db = getFirestore();
 
 onAuthStateChanged(auth, async (user) => {
-    if (!user) return;
+    const path = window.location.pathname;
 
+    // 1. Si no hay usuario y no estamos en login, ir a login
+    if (!user) {
+        if (!path.includes("login.html")) window.location.href = "login.html";
+        return;
+    }
+
+    // 2. Si hay usuario, verificamos su configuración
     const docSnap = await getDoc(doc(db, "centros", user.uid));
-    
     if (docSnap.exists()) {
         const data = docSnap.data();
         
-        // Si no está configurado, lanza el mensaje y redirige
-        if (data.configurado !== true) {
-            console.log("AQUI ESTOY");
-            alert("AQUI ESTOY: Falta configurar el centro");
-            window.location.href = "setup.html";
+        // Reglas de oro:
+        if (data.configurado === true) {
+            // Si está configurado, solo puede estar en dashboard
+            if (path.includes("setup.html") || path.includes("login.html")) {
+                window.location.href = "dashboard.html";
+            }
+        } else {
+            // Si NO está configurado, fuérzalo a setup
+            if (!path.includes("setup.html") && !path.includes("dashboard.html")) {
+                window.location.href = "setup.html";
+            }
         }
     }
 });
