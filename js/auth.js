@@ -1,75 +1,26 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-import { JADI_CORE } from './generator.js';
+import { auth, db } from './init.js';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithRedirect, getRedirectResult, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAwspV-1KcllVyRAbajVPLc0lwsWMOLIco", 
-    authDomain: "jadi-salud.firebaseapp.com",
-    projectId: "jadi-salud",
-    storageBucket: "jadi-salud.firebasestorage.app",
-    appId: "1:679691723583:web:4235a2493d09a9196ea98a"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-async function verificarRedireccion(uid) {
-    const docSnap = await getDoc(doc(db, "centros", uid));
-    if (docSnap.exists()) {
-        const data = docSnap.data();
-        window.location.href = data.configurado === true ? "dashboard.html" : "setup.html";
-    }
-}
-
 export const Auth = {
-    showRegister: () => { document.getElementById('view-login').style.display = 'none'; document.getElementById('view-register').style.display = 'block'; },
-    showLogin: () => { document.getElementById('view-login').style.display = 'block'; document.getElementById('view-register').style.display = 'none'; },
-    
     login: async (email, pass) => {
-        try {
-            const cred = await signInWithEmailAndPassword(auth, email, pass);
-            await verificarRedireccion(cred.user.uid);
-        } catch (e) { alert("Error: " + e.message); }
+        try { await signInWithEmailAndPassword(auth, email, pass); } 
+        catch (e) { alert("Error: " + e.message); }
     },
-
     register: async (name, email, pass) => {
         try {
             const cred = await createUserWithEmailAndPassword(auth, email, pass);
-            await setDoc(doc(db, "centros", cred.user.uid), {
-                nombre: name,
-                email: email,
-                configurado: false
-            });
-            window.location.href = "setup.html";
-        } catch (e) { alert("Error al registrar: " + e.message); }
+            await setDoc(doc(db, "centros", cred.user.uid), { nombre: name, email: email, configurado: false });
+        } catch (e) { alert("Error: " + e.message); }
     },
-
-    google: async () => {
-        try { await signInWithRedirect(auth, provider); } 
-        catch (e) { alert("Error: " + e.message); }
-    },
-
+    google: async () => { await signInWithRedirect(auth, provider); },
     handleRedirect: async () => {
-        try {
-            const result = await getRedirectResult(auth);
-            if (result) {
-                const user = result.user;
-                const docRef = doc(db, "centros", user.uid);
-                const docSnap = await getDoc(docRef);
-                if (!docSnap.exists()) {
-                    await setDoc(docRef, {
-                        nombre: user.displayName,
-                        idNegocio: JADI_CORE.generateBusinessID(user.displayName),
-                        email: user.email,
-                        configurado: false 
-                    });
-                }
-                alert("JADI-SALUD TE DA LA BIENVENIDA");
-                await verificarRedireccion(user.uid);
-            }
-        } catch (e) { console.error(e); }
+        const result = await getRedirectResult(auth);
+        if (result) {
+            const user = result.user;
+            await setDoc(doc(db, "centros", user.uid), { nombre: user.displayName, email: user.email, configurado: false }, { merge: true });
+        }
     }
 };
